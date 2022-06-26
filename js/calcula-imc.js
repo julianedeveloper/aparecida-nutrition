@@ -45,9 +45,8 @@ if (altura <= 0 || altura >= 3.00) {
 
 if (alturaValida && pesoValido) {
 
-    var imc = peso / (altura * altura); //mostrar a conta a ser feita primeira, colocando o parênteses para destacar ao JS. Isso é a ordem dos operadores.
-    console.log(imc);
-    tdImc.textContent = imc.toFixed(2); // aqui é atribuido um novo valor ao imc do campo e com toFixed defini em (2) que quero, no máximo, dois numeros após a virgula
+    var imc = calculaImc(peso, altura);
+    tdImc.textContent = imc; // aqui é atribuido um novo valor ao imc do campo e com toFixed defini em (2) que quero, no máximo, dois numeros após a virgula
 
 }
 
@@ -58,19 +57,14 @@ if (alturaValida === false && pesoValido === false) {
     tdImc.style.backgroundColor = 'lightcoral';
 }
 
-titulo.addEventListener("click", mostraMensagem);
+function calculaImc(peso, altura){
+    var imc = 0;
 
-    function mostraMensagem() {
-    console.log('Estou sendo clicado.');
+    imc = peso / (altura * altura);
+
+    return imc.toFixed(2);
 }
 
+
 }
-
-var botaoAdicionar = document.querySelector('#adicionar-paciente');
-botaoAdicionar.addEventListener('click', function() {
-    event.preventDefault();
-
-})
-
-
 
