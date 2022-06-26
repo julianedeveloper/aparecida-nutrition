@@ -1,9 +1,15 @@
 var titulo = document.querySelector('.titulo'); // pego o campo no html
 titulo.textContent = 'Aparecida Nutricionista'; // aqui mudo o campo que peguei no html
 
-var paciente = document.querySelector('#primeiro-paciente'); //aqui defino que quero o campo #primeiro-paciente
+var pacientes = document.querySelectorAll('.paciente'); //aqui defino que quero o campo #primeiro-paciente
+console.log(pacientes);
 
-var tdPeso = paciente.querySelector('.info-peso'); // aqui eu digo que quero do campo paciente o campo info-peso
+for (var i = 0; i < pacientes.length; i++) {
+
+    var paciente = pacientes[i];
+    console.log(paciente);
+
+    var tdPeso = paciente.querySelector('.info-peso'); // aqui eu digo que quero do campo paciente o campo info-peso
 var peso = tdPeso.textContent; // aqui eu peço o conteúdo do campo tdPeso
 console.log(peso);
 
@@ -21,6 +27,9 @@ if (peso <= 0 || peso >= 1000) {
     console.log('Peso inválido!');
     pesoValido = false;
     tdImc.textContent = 'Peso inválido!'
+    tdImc.style.fontWeight = "bolder";
+
+    paciente.classList.add("paciente-invalido");
 
 }
 
@@ -30,17 +39,38 @@ if (altura <= 0 || altura >= 3.00) {
     alturaValida = false;
     tdImc.textContent = 'Altura inválida!'
 
+    paciente.classList.add("paciente-invalido");
+
 }
 
 if (alturaValida && pesoValido) {
 
     var imc = peso / (altura * altura); //mostrar a conta a ser feita primeira, colocando o parênteses para destacar ao JS. Isso é a ordem dos operadores.
     console.log(imc);
-    tdImc.textContent = imc; // aqui é atribuido um novo valor ao imc do campo
+    tdImc.textContent = imc.toFixed(2); // aqui é atribuido um novo valor ao imc do campo e com toFixed defini em (2) que quero, no máximo, dois numeros após a virgula
 
 }
 
 if (alturaValida === false && pesoValido === false) {
 
     tdImc.textContent = 'Dados inválidos!';
+    tdImc.style.fontWeight = 'bold';
+    tdImc.style.backgroundColor = 'lightcoral';
 }
+
+titulo.addEventListener("click", mostraMensagem);
+
+    function mostraMensagem() {
+    console.log('Estou sendo clicado.');
+}
+
+}
+
+var botaoAdicionar = document.querySelector('#adicionar-paciente');
+botaoAdicionar.addEventListener('click', function() {
+    event.preventDefault();
+
+})
+
+
+
