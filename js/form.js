@@ -3,45 +3,17 @@ botaoAdicionar.addEventListener('click', function(event) { //essa função é an
     //SEGURA UMA AÇÃO PADRÃO (COMO POR EXEMPLO, LIMPAR O FORMULÁRIO AO CLICAR NO BOTÃO ADICIONAR) PARA QUE EU ATRIBUA UMA NOVA.
     event.preventDefault();
 
-    var form = document.querySelector("#form-adiciona"); //aqui eu mstro o quero do mundo html para executar essa função anônima.
+var form = document.querySelector("#form-adiciona"); //aqui eu mstro o quero do mundo html para executar essa função anônima.
 
     //abaixo vou pegar cada input (campo do form, usando o que foi atribuido em name) do form e pedir pra exibir o valor deles com o '.value'.
     //PEGAR DADOS DO FORM
-    var paciente = obtemPacienteDoFormulario(form);
-   
-    //abaixo eu crio uma linha nova no html através do js
-    // CRIAR TR (LINHA)
-    var pacienteTr = document.createElement('tr'); // CREATE ELEMENT cria qualquer tag html que eu quiser
+var paciente = obtemPacienteDoFormulario(form);
+var pacienteTr = montaTr(paciente); 
 
-    // abaixo vou criar os campos da nova linha (tr)
-    //CRIO TD (CAMPOS DA LINHA)
-    var nomeTd = document.createElement('td');
-    var pesoTd = document.createElement('td');
-    var alturaTd = document.createElement('td');
-    var gorduraTd = document.createElement('td');
-    var imcTd = document.createElement('td');
+ //COLOCANCO O TR (LINHA) DENTRO DA TABELA QUE JÁ HAVIA NO FORM
+var tabela = document.querySelector('#tabela-pacientes').appendChild(pacienteTr);
 
-    //aqui eu atribuo aos campos novos criados, o conteúdo deles. O conteúdo deles será o capturado pelas variáveis que capturam o valor de cada campo.
-    //PREENCHENDO OS TD'S (CAMPOS) COM OS VALORES TRAZIDOS DO FORM
-    nomeTd.textContent = nome;
-    pesoTd.textContent = peso;
-    alturaTd.textContent = altura;
-    gorduraTd.textContent = gordura;
-    imcTd.textContent = calculaImc(peso,altura);
-
-
-    //aqui, com a função APPEND.CHILD, vou colocar dentro da linha PACIENTETR, todos os campos criads com os createElement acima.
-    //COLOCANCO TD'S DENTRO DA TR
-    pacienteTr.appendChild(nomeTd); 
-    pacienteTr.appendChild(pesoTd);
-    pacienteTr.appendChild(alturaTd);
-    pacienteTr.appendChild(gorduraTd);
-    pacienteTr.appendChild (imcTd);
-
-
-    //COLOCANCO O TR (LINHA) DENTRO DA TABELA QUE JÁ HAVIA NO FORM
-    var tabela = document.querySelector('#tabela-pacientes').appendChild(pacienteTr);
-    tabela.appendChild(pacienteTr);
+form.reset();
 
 })
 
@@ -56,6 +28,27 @@ function obtemPacienteDoFormulario(form){
     return paciente;
 }
 
+// CRIAR TR (LINHA)
+function montaTr(paciente){
+    var pacienteTr = document.createElement('tr'); // CREATE ELEMENT cria qualquer tag html que eu quiser
+    pacienteTr.classList.add('paciente');
+    //COLOCANCO TD'S DENTRO DA TR
+    pacienteTr.appendChild(montarTd(paciente.nome, 'info-nome')); 
+    pacienteTr.appendChild(montarTd(paciente.peso, 'info-peso'));
+    pacienteTr.appendChild(montarTd(paciente.altura, 'info-altura'));
+    pacienteTr.appendChild(montarTd(paciente.gordura, 'info-gordura'));
+    pacienteTr.appendChild (montarTd(paciente.imc, 'info-imc'));
+
+    return pacienteTr;
+    }   
+
+function montarTd (dado, classe){
+    var td = document.createElement('td');
+    td.textContent = dado;
+    td.classList.add(classe);
+
+    return td;
+}
 
 
 
