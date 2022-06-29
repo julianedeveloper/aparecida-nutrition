@@ -1,69 +1,87 @@
-var titulo = document.querySelector('.titulo'); // pego o campo no html
-titulo.textContent = 'Aparecida Nutricionista'; // aqui mudo o campo que peguei no html
-
+var titulo = document.querySelector('.titulo').textContent = 'Aparecida Nutrição'; // pego o campo no html
 var pacientes = document.querySelectorAll('.paciente'); //aqui defino que quero o campo #primeiro-paciente
-console.log(pacientes);
 
 for (var i = 0; i < pacientes.length; i++) {
 
     var paciente = pacientes[i];
-    console.log(paciente);
-
     var tdPeso = paciente.querySelector('.info-peso'); // aqui eu digo que quero do campo paciente o campo info-peso
-var peso = tdPeso.textContent; // aqui eu peço o conteúdo do campo tdPeso
-console.log(peso);
+    var peso = tdPeso.textContent; // aqui eu peço o conteúdo do campo tdPeso
+    var tdAltura = paciente.querySelector('.info-altura'); // aqui eu peço do campo paciente o campo info-altura
+    var altura =  tdAltura.textContent; // aqui eu exibo o conteúdo do tdAltura
+    console.log(altura);
+    var pesoValido = validaPeso(peso);
+    console.log(pesoValido);
+    var alturaValida = validaAltura(altura);
+    console.log(alturaValida);
+    var tdImc = paciente.querySelector('.info-imc'); // aqui eu defino que quero que ele pegue o campo info-imc
+    console.log(tdImc);
 
-var tdAltura = paciente.querySelector('.info-altura'); // aqui eu peço do campo paciente o campo info-altura
-var altura =  tdAltura.textContent; // aqui eu exibo o conteúdo do tdAltura
-console.log(altura);
+    if (!validaPeso) {
 
-var pesoValido = true;
-var alturaValida = true;
+        pesoValido = false;
+        tdImc.textContent = 'Peso inválido!'
+        tdImc.style.fontWeight = "bolder";
+        paciente.classList.add("paciente-invalido");
 
-var tdImc = paciente.querySelector('.info-imc'); // aqui eu defino que quero que ele pegue o campo info-imc e atribua o valor após o cálculo
+        console.log('Peso Inválido.')
 
-if (peso <= 0 || peso >= 1000) {
+    }
 
-    console.log('Peso inválido!');
-    pesoValido = false;
-    tdImc.textContent = 'Peso inválido!'
-    tdImc.style.fontWeight = "bolder";
+    if (!validaAltura) {
 
-    paciente.classList.add("paciente-invalido");
+        alturaValida = false;
+        tdImc.textContent = 'Altura inválida!'
+        tdImc.style.fontWeight = 'bolder';
+        paciente.classList.add("paciente-invalido");
 
-}
+        console.log('Altura Inválida.');
 
-if (altura <= 0 || altura >= 3.00) {
+    }
 
-    console.log('Altura inválida!');
-    alturaValida = false;
-    tdImc.textContent = 'Altura inválida!'
+    if (alturaValida && pesoValido) {
 
-    paciente.classList.add("paciente-invalido");
+        var imc = calculaImc(peso, altura);
+        tdImc.textContent = imc; // aqui é atribuido um novo valor ao imc do campo e com toFixed defini em (2) que quero, no máximo, dois numeros após a virgula
 
-}
+    }
 
-if (alturaValida && pesoValido) {
+    if (alturaValida === false && pesoValido === false) {
 
-    var imc = calculaImc(peso, altura);
-    tdImc.textContent = imc; // aqui é atribuido um novo valor ao imc do campo e com toFixed defini em (2) que quero, no máximo, dois numeros após a virgula
+        tdImc.textContent = 'Dados inválidos!';
+        tdImc.style.fontWeight = 'bold';
+        tdImc.style.backgroundColor = 'lightcoral';
 
-}
+    }
 
-if (alturaValida === false && pesoValido === false) {
+    function validaPeso (peso) {
 
-    tdImc.textContent = 'Dados inválidos!';
-    tdImc.style.fontWeight = 'bold';
-    tdImc.style.backgroundColor = 'lightcoral';
-}
+        if(peso >= 0 && peso <= 400){
+            return true;
+        } else {
+            return false;
+        }
+        console.log(validaPeso);
+    }
 
-function calculaImc(peso, altura){
-    var imc = 0;
+    function validaAltura (altura) {
 
-    imc = peso / (altura * altura);
+        if(altura >= 0 || altura <= 3.00){
+            return true;
+        } else {
+            return false;
+        }
 
-    return imc.toFixed(2);
-}
+    }
+    
+    function calculaImc(peso, altura){
 
+        var imc = 0;
+        imc = peso / (altura * altura); // aqui eu sobreescrevi o valor anterior
+    
+        return imc.toFixed(2); //exibe duas casa depois da vírgula
+
+    }
+
+    
 }
 

@@ -1,22 +1,23 @@
-var botaoAdicionar = document.querySelector('#adicionar-paciente'); // aqui eu adiciono paciente.
-botaoAdicionar.addEventListener('click', function(event) { //essa função é anônima
-    //SEGURA UMA AÇÃO PADRÃO (COMO POR EXEMPLO, LIMPAR O FORMULÁRIO AO CLICAR NO BOTÃO ADICIONAR) PARA QUE EU ATRIBUA UMA NOVA.
+var botaoAdicionar = document.querySelector('#adicionar-paciente').addEventListener('click', function(event) { 
+//IMPEDE AÇÃO PADRÃO (EXEMPLO: LIMPAR O FORMULÁRIO AO CLICAR EM ADICIONAR) PARA QUE EU ATRIBUA UMA NOVA.
     event.preventDefault();
-
-var form = document.querySelector("#form-adiciona"); //aqui eu mstro o quero do mundo html para executar essa função anônima.
-
-    //abaixo vou pegar cada input (campo do form, usando o que foi atribuido em name) do form e pedir pra exibir o valor deles com o '.value'.
-    //PEGAR DADOS DO FORM
+var form = document.querySelector("#form-adiciona"); //vem mundo html para executar essa função anônima.
+//PEGAR DADOS DO FORM
 var paciente = obtemPacienteDoFormulario(form);
 var pacienteTr = montaTr(paciente); 
+var erro = validaPaciente(paciente);
 
- //COLOCANCO O TR (LINHA) DENTRO DA TABELA QUE JÁ HAVIA NO FORM
+    if(erro.length > 0){
+        
+        var mensagemErro = document.querySelector('#mensagem-erro');
+        mensagemErro.textContent = erro;
+        return; //esse return evita o preenchimento da tabela com dados inválidos
+    }
+//COLOCANCO O TR (LINHA) DENTRO DA TABELA QUE JÁ HAVIA NO FORM
 var tabela = document.querySelector('#tabela-pacientes').appendChild(pacienteTr);
-
 form.reset();
-
 })
-
+//pego cada input (usando o que foi atribuido em name) do form e peço pra exibir o valor deles com o '.value'.
 function obtemPacienteDoFormulario(form){
     var paciente = {
         nome:form.nome.value,  // captura nome do form
@@ -27,12 +28,11 @@ function obtemPacienteDoFormulario(form){
     }
     return paciente;
 }
-
 // CRIAR TR (LINHA)
 function montaTr(paciente){
     var pacienteTr = document.createElement('tr'); // CREATE ELEMENT cria qualquer tag html que eu quiser
     pacienteTr.classList.add('paciente');
-    //COLOCANCO TD'S DENTRO DA TR
+    //COLOCANCO TD'S DENTRO DA TR E JÁ ATRIBUO CLASSE ATRAVÉS DA FUNCTION montarTd
     pacienteTr.appendChild(montarTd(paciente.nome, 'info-nome')); 
     pacienteTr.appendChild(montarTd(paciente.peso, 'info-peso'));
     pacienteTr.appendChild(montarTd(paciente.altura, 'info-altura'));
@@ -48,6 +48,14 @@ function montarTd (dado, classe){
     td.classList.add(classe);
 
     return td;
+}
+
+function validaPaciente(paciente) { // esse parâmetro 'paciente' está vindo da function obtemPacienteDoFormulario acima.
+    if(validaPeso(paciente.peso)){
+        return true; 
+    } else {
+        return ('Peso inválido!');
+    }
 }
 
 
