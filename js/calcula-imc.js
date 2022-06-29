@@ -1,4 +1,4 @@
-var titulo = document.querySelector('.titulo').textContent = 'Aparecida Nutrição'; // pego o campo no html
+var titulo = document.querySelector('.titulo').textContent = 'Aparecida Nutricionista'; // pego o campo no html
 var pacientes = document.querySelectorAll('.paciente'); //aqui defino que quero o campo #primeiro-paciente
 
 for (var i = 0; i < pacientes.length; i++) {
@@ -40,7 +40,7 @@ for (var i = 0; i < pacientes.length; i++) {
 
     if (alturaValida && pesoValido) {
 
-        var imc = calculaImc(peso, altura);
+        var imc = calculaImc(peso,altura);
         tdImc.textContent = imc; // aqui é atribuido um novo valor ao imc do campo e com toFixed defini em (2) que quero, no máximo, dois numeros após a virgula
 
     }
@@ -55,22 +55,20 @@ for (var i = 0; i < pacientes.length; i++) {
 
     function validaPeso (peso) {
 
-        if(peso >= 0 && peso <= 400){
+        if(peso <= 0 && peso >= 400){
             return true;
         } else {
             return false;
         }
-        console.log(validaPeso);
     }
 
     function validaAltura (altura) {
 
-        if(altura >= 0 || altura <= 3.00){
+        if(altura <= 0 || altura <= 3.00){
             return true;
         } else {
             return false;
         }
-
     }
     
     function calculaImc(peso, altura){
