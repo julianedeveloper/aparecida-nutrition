@@ -14,6 +14,7 @@ campoFiltro.addEventListener("input", function(){
             if (!expressao.test(nome)) {
                 paciente.classList.add("invisivel");
             } else {
+            
                 paciente.classList.remove("invisivel");
             }
         }

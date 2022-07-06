@@ -4,21 +4,28 @@ var botaoAdicionar = document.querySelector('#adicionar-paciente').addEventListe
 var form = document.querySelector("#form-adiciona"); //vem mundo html para executar essa função anônima.
 //PEGAR DADOS DO FORM
 var paciente = obtemPacienteDoFormulario(form);
-var pacienteTr = montaTr(paciente); 
 var erros = validaPacientes(paciente);
     console.log(erros);
-    if(erros.length > 0){
-        
+    if(erros.length > 0){  
         exibeMensagemDeErro(erros);
         return; //esse return evita o preenchimento da tabela com dados inválidos
     }
 //COLOCANCO O TR (LINHA) DENTRO DA TABELA QUE JÁ HAVIA NO FORM
-var tabela = document.querySelector('#tabela-pacientes').appendChild(pacienteTr);
+adicionaPacienteNaTabela(pacientes);
+
 form.reset();
+
 var mensagensErro = document.querySelector("#mensagens-erro");
 mensagensErro.innerHTML = "";
 })
 //pego cada input (usando o que foi atribuido em name) do form e peço pra exibir o valor deles com o '.value'.
+
+function adicionaPacienteNaTabela(paciente){
+    var pacienteTr = montaTr(paciente); 
+    var tabela = document.querySelector('#tabela-pacientes');
+    tabela.appendChild(pacienteTr);
+
+}
 function obtemPacienteDoFormulario(form){
 
     var paciente = {
