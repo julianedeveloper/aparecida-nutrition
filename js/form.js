@@ -2,17 +2,16 @@ var botaoAdicionar = document.querySelector('#adicionar-paciente').addEventListe
 //IMPEDE AÇÃO PADRÃO (EXEMPLO: LIMPAR O FORMULÁRIO AO CLICAR EM ADICIONAR) PARA QUE EU ATRIBUA UMA NOVA.
     event.preventDefault();
 var form = document.querySelector("#form-adiciona"); //vem mundo html para executar essa função anônima.
-//PEGAR DADOS DO FORM
 var paciente = obtemPacienteDoFormulario(form);
 var erros = validaPacientes(paciente);
     console.log(erros);
+
     if(erros.length > 0){  
         exibeMensagemDeErro(erros);
         return; //esse return evita o preenchimento da tabela com dados inválidos
     }
-//COLOCANCO O TR (LINHA) DENTRO DA TABELA QUE JÁ HAVIA NO FORM
-adicionaPacienteNaTabela(pacientes);
 
+adicionaPacienteNaTabela(paciente);
 form.reset();
 
 var mensagensErro = document.querySelector("#mensagens-erro");
@@ -21,11 +20,13 @@ mensagensErro.innerHTML = "";
 //pego cada input (usando o que foi atribuido em name) do form e peço pra exibir o valor deles com o '.value'.
 
 function adicionaPacienteNaTabela(paciente){
+    
     var pacienteTr = montaTr(paciente); 
     var tabela = document.querySelector('#tabela-pacientes');
     tabela.appendChild(pacienteTr);
 
 }
+
 function obtemPacienteDoFormulario(form){
 
     var paciente = {
@@ -37,6 +38,7 @@ function obtemPacienteDoFormulario(form){
     }
     return paciente;
 }
+
 // CRIAR TR (LINHA)
 function montaTr(paciente){
 
